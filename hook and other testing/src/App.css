@@ -40,3 +40,42 @@
 .read-the-docs {
   color: #888;
 }
+
+/* Styles for the pagination start*/
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.pagination li {
+  margin: 0 5px;
+}
+
+.pagination li a {
+  display: block;
+  padding: 8px 16px;
+  border-radius: 4px;
+  text-decoration: none;
+  color: #333;
+  background-color: #f1f1f1;
+  transition: background-color 0.3s;
+}
+
+.pagination li a:hover {
+  background-color: #ddd;
+}
+
+.pagination li.selected a {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.pagination li.disabled a {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+/* Styles for the pagination end*/

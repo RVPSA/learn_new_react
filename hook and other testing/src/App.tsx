@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./App.css";
 import ReactQueryExamples from "./newThings/ReactQueryExamples";
+import PaginateComponent from "./newThings/PaginateComponent";
 // import FilterWithoutTransition from "./newThings/FilterWithoutTransition";
 // import FilterWithTransition from "./newThings/FilterWithTransition";
 // import UseCallbackExamples from "./newThings/UseCallbackExamples";
@@ -20,8 +21,9 @@ function App() {
         <FilterWithoutTransition />
         <FilterWithTransition />
       </div> */}
-      <button onClick={() => setShowDemo(!showDemo)}>Toggle Demo</button>
-      {showDemo && <ReactQueryExamples></ReactQueryExamples>}
+      {/* <button onClick={() => setShowDemo(!showDemo)}>Toggle Demo</button> */}
+      {/* {showDemo && <ReactQueryExamples></ReactQueryExamples>} */}
+      <PaginateComponent itemsPerPage={5}></PaginateComponent>
     </>
   );
 }

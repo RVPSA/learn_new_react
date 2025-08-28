@@ -1,3 +1,4 @@
+import axios from "axios";
 import type { Todo } from "../entities/Todo";
 
 const todos = [
@@ -63,3 +64,14 @@ export const addTodo = async (title: string): Promise<Todo> => {
   console.log("New Todo List::", todos);
   return newTodo;
 };
+
+export const fetchEmployee = async (pageNumber=1,pageSize = 5)=>{
+  
+  try {
+    let res = await axios.get(`https://localhost:7133/Employee/GetAllEmployee?pageSize=${pageSize}&pageNumber=${pageNumber}`)
+    return res.data
+  } catch (error) {
+    alert(error)
+  }
+  
+}

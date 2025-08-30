@@ -13,14 +13,13 @@ function UseCallbackExamples() {
   // even if 'count' changes, because it's using the *latest* state.
   const handleClick = useCallback(() => {
     setCount((prevCount) => prevCount + 1); // <--- Corrected
-    console.log("render");
+    console.log("Handle click function with callback");
   }, []); // <--- Dependency array can remain empty!
 
   return (
     <>
-      {/* <MemoizedButton onClick={handleClick}></MemoizedButton>  */}
       {/* <--- Use MemoizedButton */}
-      <Button onClick={handleClick}></Button>
+      <MemoizedButton onClick={handleClick}></MemoizedButton> 
       <Button2 onClick={handleClick2}></Button2>
       <p>Count: {count}</p>
       <p>Count1: {count1}</p>
@@ -33,17 +32,16 @@ export default UseCallbackExamples;
 // --- Button Component ---
 interface ButtonProps {
   onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  // You can add other props here, e.g., children: React.ReactNode;
 }
 
 function Button({ onClick }: ButtonProps) {
-  console.log("abc"); // This will now only print when its props or internal state actually change
+  console.log("With call back"); 
   return <button onClick={onClick}>With callback</button>;
 }
 function Button2({ onClick }: ButtonProps) {
-  console.log("abc"); // This will now only print when its props or internal state actually change
+  console.log("without callback");
   return <button onClick={onClick}>Without callback</button>;
 }
 
 // Memoize the Button component to prevent unnecessary re-renders
-//const MemoizedButton = React.memo(Button); // <--- Added React.memo
+ const MemoizedButton = React.memo(Button); // <--- Added React.memo

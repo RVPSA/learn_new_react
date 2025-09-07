@@ -1,35 +1,71 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import {  gql } from "@apollo/client";
+import { useQuery,useMutation } from "@apollo/client/react";
+
+const GET_EMPLOYEE = gql`
+  query GetEmployee {
+    allEmployees {
+      name
+    }
+  }
+`;
+
+const GET_EMPLOYEE_BY_ID = gql`
+  query GetEmployeeByID($ID: Int!) {
+    employeeById(id: $ID) {
+      name
+    }
+  }
+`;
+
+const CREATE_EMPLOYEE = gql`
+  mutation CreateEmployee($name: String!, $gender: String!, $salary: Int!) {
+    addEmployee(name: $name, gender: $gender,salary:$salary) {
+      name
+    }
+  }
+`;
 
 function App() {
-  const [count, setCount] = useState(0)
+  const { data, error, loading } = useQuery(GET_EMPLOYEE);
+  const {
+    data: getUserByIdData,
+    error: getUserByIdError,
+    loading: getUserByIdLoading,
+  } = useQuery(GET_EMPLOYEE_BY_ID, {
+    variables: { ID: 1 },
+  });
+  const [createEmployee] = useMutation(CREATE_EMPLOYEE);
 
+  const handleNewEmployee = async () => {
+    createEmployee({
+      variables: {
+        name: "Akesh",
+        salary: Number(10),
+        gender:"Male"
+      },
+    });
+  };
+
+  if (loading)
+    return (
+      <>
+        <h1>Loading...</h1>
+      </>
+    );
+  if (error)
+    return (
+      <>
+        <h1>Error: {error.message}</h1>
+      </>
+    );
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <h1> Employees</h1>
+      <div>{data.allEmployees.map((n,index)=>{return<>{n.name}<br></br></>})}</div>
+      <button onClick={handleNewEmployee}>Add Employee</button>
+      <div>{getUserByIdData.employeeById?.name}</div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
